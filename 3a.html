@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body style="text-align: center; font-family: Arial, sans-serif;">
+
+    <h2>Login</h2>
+    
+    <label>User ID:</label><br>
+    <input type="text" id="userid"><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" id="password"><br><br>
+
+    <button onclick="validateLogin()">Login</button>
+
+    <script>
+        function validateLogin() {
+            if (document.getElementById("userid").value === "admin" && 
+                document.getElementById("password").value === "1234") {
+                alert("Login Successful!");
+            } else {
+                alert("Invalid User ID or Password!");
+            }
+        }
+    </script>
+
+</body>
+</html>

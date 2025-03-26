@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catalog & Cart</title>
+</head>
+<body style="text-align: center; font-family: Arial, sans-serif;">
+
+    <h2>Catalog</h2>
+    
+    <p>Product 1 - $10 <button onclick="addToCart('Product 1')">Add</button></p>
+    <p>Product 2 - $15 <button onclick="addToCart('Product 2')">Add</button></p>
+    <p>Product 3 - $20 <button onclick="addToCart('Product 3')">Add</button></p>
+
+    <h2>Cart</h2>
+    <p id="cart">Empty</p>
+
+    <script>
+        var cart = "";
+
+        function addToCart(product) {
+            cart += product + "<br>";
+            document.getElementById("cart").innerHTML = cart;
+        }
+    </script>
+
+</body>
+</html>

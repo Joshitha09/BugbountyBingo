@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Book Catalog - Discover Your Next Read</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('bg1.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            color: black; /* Changed the color to black */
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .catalog-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .book-card {
+            width: 200px;
+            margin: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .book-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .book-card h3 {
+            font-size: 18px;
+            color: #333;
+        }
+        .book-card p {
+            font-size: 16px;
+            color: #666;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .back-to-home {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        E-Book Catalog - Discover Your Next Read
+    </div>
+
+    <div class="catalog-container">
+        <div class="book-card">
+            <img src="book1.jpg" alt="Book 1">
+            <h3>The girl who knew too much</h3>
+            <p>$19.99</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="book-card">
+            <img src="book2.jpg" alt="Book 2">
+            <h3>Something I never told you</h3>
+            <p>$15.99</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="book-card">
+            <img src="book3.jpg" alt="Book 3">
+            <h3>Best Friend</h3>
+            <p>$24.99</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="book-card">
+            <img src="book4.jpg" alt="Book 4">
+            <h3>The Enemy</h3>
+            <p>$29.99</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="back-to-home">
+        <a href="login.html">Back to Home</a>
+    </div>
+
+    <script>
+        // You can add functionality to add books to cart here
+        const addToCartButtons = document.querySelectorAll('.book-card button');
+        addToCartButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                alert('Book added to cart!');
+                // Here, you can add more code to handle cart functionality, like storing the book in a cart array
+            });
+        });
+    </script>
+</body>
+</html>
