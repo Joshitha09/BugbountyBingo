@@ -314,3 +314,109 @@ body {
         font-size: 1.5rem;
     }
 }
+
+/* Language Selection Styles */
+.language-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.language-header {
+    margin-bottom: 3rem;
+}
+
+.language-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.language-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.language-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.language-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.python-icon {
+    background: linear-gradient(135deg, #3776ab 0%, #ffde57 100%);
+}
+
+.java-icon {
+    background: linear-gradient(135deg, #5382a1 0%, #f89820 100%);
+}
+
+.c-icon {
+    background: linear-gradient(135deg, #00599c 0%, #659ad2 100%);
+}
+
+/* Bingo Grid Styles */
+.bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cell {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.cell.correct {
+    background: var(--success);
+    color: white;
+}
+
+.bug-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.bug-number {
+    font-weight: bold;
+}
+
