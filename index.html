@@ -6,96 +6,132 @@
     <title>Python Bug Bingo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
-    <div class="container py-5">
-        <!-- Header with BINGO Letters -->
-        <div class="game-header text-center">
-            <h1 class="game-title">Python Bug Bingo</h1>
-            <div class="bingo-track" id="bingoProgress">
-                <div class="bingo-letter" style="background-color: #FF6B6B;">B</div>
-                <div class="bingo-letter" style="background-color: #4ECDC4;">I</div>
-                <div class="bingo-letter" style="background-color: #45B7D1;">N</div>
-                <div class="bingo-letter" style="background-color: #A5D8FF;">G</div>
-                <div class="bingo-letter" style="background-color: #FFD8A8;">O</div>
-            </div>
+    <!-- Language Selection Section -->
+    <div id="languageSelection" class="language-container">
+        <div class="language-header">
+            <h1 class="language-title">Bug Bingo</h1>
+            <p class="lead">Select your programming language to start playing</p>
         </div>
         
-        <!-- Bingo Grid -->
-        <div id="grid"></div>
-    </div>
-
-    <!-- Help Button -->
-    <div class="help-btn" data-bs-toggle="modal" data-bs-target="#helpModal">?</div>
-
-    <!-- Help Modal -->
-    <div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">How to Play Python Bug Bingo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="language-grid">
+            <div class="language-card" onclick="startGame('python')">
+                <div class="language-icon python-icon">
+                    <i class="fab fa-python"></i>
                 </div>
-                <div class="modal-body">
-                    <h6>Game Rules:</h6>
-                    <ol>
-                        <li>Click on any bug cell to reveal a Python code snippet with a bug</li>
-                        <li>Fix the bug in the code editor and submit your solution</li>
-                        <li>If correct, the cell turns green permanently</li>
-                        <li>Complete a row, column, or diagonal to mark a BINGO letter</li>
-                        <li>Complete all 5 letters in BINGO to win!</li>
-                    </ol>
+                <h3>Python</h3>
+                <p>Find and fix bugs in Python code snippets</p>
+            </div>
+            
+            <div class="language-card" onclick="startGame('java')">
+                <div class="language-icon java-icon">
+                    <i class="fab fa-java"></i>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
+                <h3>Java</h3>
+                <p>Coming soon - Java challenges</p>
+            </div>
+            
+            <div class="language-card" onclick="startGame('c')">
+                <div class="language-icon c-icon">
+                    <i class="fas fa-code"></i>
                 </div>
+                <h3>C</h3>
+                <p>Coming soon - C challenges</p>
             </div>
         </div>
     </div>
 
-    <!-- Bugged Code Modal -->
-    <div class="modal fade" id="buggedCodeModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Fix the Bug</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Python Bug Bingo Game (initially hidden) -->
+    <div id="pythonGame" style="display: none;">
+        <div class="container py-5">
+            <!-- Header with BINGO Letters -->
+            <div class="game-header text-center">
+                <h1 class="game-title">Python Bug Bingo</h1>
+                <div class="bingo-track" id="bingoProgress">
+                    <div class="bingo-letter" style="background-color: #FF6B6B;">B</div>
+                    <div class="bingo-letter" style="background-color: #4ECDC4;">I</div>
+                    <div class="bingo-letter" style="background-color: #45B7D1;">N</div>
+                    <div class="bingo-letter" style="background-color: #A5D8FF;">G</div>
+                    <div class="bingo-letter" style="background-color: #FFD8A8;">O</div>
                 </div>
-                <div class="modal-body">
-                    <h6>Bugged Code:</h6>
-                    <pre id="buggedCode"></pre>
-                    
-                    <div class="test-case-info bg-light p-3 rounded mb-3">
-                        <div id="testCase"></div>
-                        <div id="expectedOutput" class="mt-2"></div>
+            </div>
+            
+            <!-- Bingo Grid -->
+            <div id="grid" class="bingo-grid"></div>
+        </div>
+
+        <!-- Help Button -->
+        <div class="help-btn" data-bs-toggle="modal" data-bs-target="#helpModal">?</div>
+
+        <!-- Help Modal -->
+        <div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">How to Play Python Bug Bingo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    
-                    <h6>Your Solution:</h6>
-                    <textarea id="userCode" class="form-control mb-3" 
-                              placeholder="Enter your corrected code here..." 
-                              rows="8" spellcheck="false"></textarea>
-                    
-                    <div id="testCasesResult"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="submitBtn" type="button" class="btn btn-primary">Submit</button>
+                    <div class="modal-body">
+                        <h6>Game Rules:</h6>
+                        <ol>
+                            <li>Click on any bug cell to reveal a Python code snippet with a bug</li>
+                            <li>Fix the bug in the code editor and submit your solution</li>
+                            <li>If correct, the cell turns green permanently</li>
+                            <li>Complete a row, column, or diagonal to mark a BINGO letter</li>
+                            <li>Complete all 5 letters in BINGO to win!</li>
+                        </ol>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Bugged Code Modal -->
+        <div class="modal fade" id="buggedCodeModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Fix the Bug</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Bugged Code:</h6>
+                        <pre id="buggedCode"></pre>
+                        
+                        <div class="test-case-info bg-light p-3 rounded mb-3">
+                            <div id="testCase"></div>
+                            <div id="expectedOutput" class="mt-2"></div>
+                        </div>
+                        
+                        <h6>Your Solution:</h6>
+                        <textarea id="userCode" class="form-control mb-3" 
+                                  placeholder="Enter your corrected code here..." 
+                                  rows="8" spellcheck="false"></textarea>
+                        
+                        <div id="testCasesResult"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="submitBtn" type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Win Celebration Modal -->
+        <div class="win-celebration" id="winCelebration">
+            <div class="win-text">CONGRATULATIONS!</div>
+            <div class="win-subtext">You've fixed all the bugs and won Python Bug Bingo!</div>
+        </div>
     </div>
 
-    <!-- Win Celebration Modal -->
-    <div class="win-celebration" id="winCelebration">
-        <div class="win-text">CONGRATULATIONS!</div>
-        <div class="win-subtext">You've fixed all the bugs and won Python Bug Bingo!</div>
-    </div>
-
-    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Confetti JS -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
